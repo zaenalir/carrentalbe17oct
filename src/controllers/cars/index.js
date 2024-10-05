@@ -1,111 +1,37 @@
-const { PrismaClient } = require("@prisma/client");
-const prisma = new PrismaClient();
-class Cars {
-  async getCars(req, res) {
-    try {
-      const cars = await prisma.cars.findMany({
-        select: {
-          id: true,
-          name: true,
-          manufactur: true,
-          img: true,
-          year: true,
-          price: true,
-        },
-      });
-      console.log(cars);
-      res.status(200).json(cars);
-    } catch (error) {
-      console.log(error);
-      res.status(500).send("Internal Server Error!");
-    }
-  }
+const Joi = require("joi");
 
-  async getCarById(req, res) {
-    const { id } = req.params;
-    try {
-      const car = await prisma.cars.findUnique({
-        where: { id: Number(id) },
-      });
-      if (!car) res.status(404).send("Car not found!");
-      res.status(200).json(car);
-    } catch (error) {
-      console.log(error);
-      res.status(500).send("Internal Server Error!");
-    }
-  }
+const BaseController = require('../base')
+const CarModel = require('../../models/cars')
 
-  async createCar(req, res) {
-    const {
-      name,
-      year,
-      type,
-      manufactur,
-      price,
-      img,
-      licenseNumber,
-      seat = 5,
-      baggage,
-      transmission,
-      description,
-      isDriver,
-      isAvailable,
-    } = req.body;
-    try {
-      const car = await prisma.cars.create({
-        data: {
-          name,
-          year,
-          type,
-          manufactur,
-          price,
-          img,
-          licenseNumber,
-          seat,
-          baggage,
-          transmission,
-          description,
-          isDriver,
-          isAvailable,
-        },
-      });
-      res.status(200).json(car);
-    } catch (error) {
-      console.log(error);
-      res.status(500).send("Internal Server Error!");
-    }
-  }
+const cars = new CarModel();
 
-  async updateCar(req, res) {
-    const { id } = req.params;
-    try {
-      const car = await prisma.cars.update({
-        data: req.body,
-        where: { id },
-      });
-      if (!car) res.status(404).send("Car not found!");
-      res.status(200).json(car);
-    } catch (error) {
-      console.log(error);
-      res.status(500).send("Internal Server Error!");
-    }
-  }
+const carSchema = Joi.object({
+  name: Joi.string().required(),
+  price: Joi.number().required(),
+  type: Joi.string(),
+  manufactur: Joi.string().required(),
+  isDriver: Joi.boolean().required(),
+  img: Joi.string().uri().allow(null),
+  description: Joi.string().allow(null),
+  isAvailable: Joi.boolean(),
+  licenseNumber: Joi.string(),
+  seat: Joi.number().min(2),
+  baggage: Joi.number(),
+  transmission: Joi.string(),
+  year: Joi.string(),
+})
 
-  async deleteCar(req, res) {
-    const { id } = req.params;
-    try {
-      const car = await prisma.cars.delete({
-        where: { id },
-      });
-
-      if (!car) return res.status(404).json("Car not found!");
-
-      res.status(200).json("Car deleted successfully!");
-    } catch (error) {
-      console.log(error);
-      res.status(500).send("Internal Server Error!");
-    }
+class CarsController extends BaseController {
+  constructor(model) {
+    super(model);
+    this.router.get("/", this.getAll);
+    this.router.post("/", this.validation(carSchema), this.create);
+    this.router.get("/:id", this.get);
+    this.router.put("/:id", this.validation(carSchema), this.update);
+    this.router.delete("/:id", this.delete);
   }
 }
 
-module.exports = new Cars();
+const carsController = new CarsController(cars);
+
+module.exports = carsController.router
