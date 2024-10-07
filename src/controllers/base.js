@@ -1,12 +1,10 @@
 // abstraction / abtract class
-const express = require("express");
-const router = express.Router();
+const ValidationError = require("../helpers/errors/validation");
 const validation = require("../middlewares/validation");
 const { Prisma } = require("@prisma/client");
 
 class BaseController {
   constructor(model) {
-    this.router = router;
     this.model = model;
     this.validation = validation;
   }
@@ -53,7 +51,7 @@ class BaseController {
       const { id } = req.params;
       const resource = await this.model.getById(id);
       if (!resource) {
-        throw new NotFoundError();
+        return next(new NotFoundError(`cars ${id} not found`, "Data not found"))
       }
       return res.status(200).json(
         this.apiSend({
@@ -67,7 +65,7 @@ class BaseController {
     }
   };
 
-  create = async (req, res) => {
+  create = async (req, res, next) => {
     try {
       const resource = await this.model.set(req.body);
 

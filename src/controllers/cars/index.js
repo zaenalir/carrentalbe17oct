@@ -2,6 +2,8 @@ const Joi = require("joi");
 
 const BaseController = require('../base')
 const CarModel = require('../../models/cars')
+const express = require('express');
+const router = express.Router()
 
 const cars = new CarModel();
 
@@ -24,14 +26,14 @@ const carSchema = Joi.object({
 class CarsController extends BaseController {
   constructor(model) {
     super(model);
-    this.router.get("/", this.getAll);
-    this.router.post("/", this.validation(carSchema), this.create);
-    this.router.get("/:id", this.get);
-    this.router.put("/:id", this.validation(carSchema), this.update);
-    this.router.delete("/:id", this.delete);
+    router.get("/", this.getAll);
+    router.post("/", this.validation(carSchema), this.create);
+    router.get("/:id", this.get);
+    router.put("/:id", this.validation(carSchema), this.update);
+    router.delete("/:id", this.delete);
   }
 }
 
-const carsController = new CarsController(cars);
+new CarsController(cars);
 
-module.exports = carsController.router
+module.exports = router

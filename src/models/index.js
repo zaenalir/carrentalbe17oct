@@ -8,6 +8,7 @@ class BaseModel {
     this.model = prisma[model];
   }
   get = async ({ where = {}, q = {} }) => {
+    console.log(this.model)
     const { sortBy = "createdDt", sort = "desc", page = 1, limit = 10 } = q;
     const query = {
       select: this.select,
@@ -35,7 +36,7 @@ class BaseModel {
   };
 
   getOne = async (query) => {
-    return this.model.findUnique(query);
+    return this.model.findFirst(query);
   };
 
   set = async (data) => {
