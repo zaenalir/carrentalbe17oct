@@ -5,6 +5,7 @@ const UserModel = require("../../models/user");
 const express = require("express");
 const ValidationError = require("../../helpers/errors/validation");
 const { encryptPassword } = require("../../helpers/bcrypt");
+const { authorize, checkRole } = require('../../middlewares/authorization')
 const router = express.Router();
 
 const user = new UserModel();

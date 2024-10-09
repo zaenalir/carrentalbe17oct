@@ -229,7 +229,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"fullname\": \"Amir\",\r\n    \"email\": \"amir1@mail.com\",\r\n    \"password\": \"123456\",\r\n    \"role\": \"USER\",\r\n    \"address\": \"JL\",\r\n    \"gender\": \"laki-laki\",\r\n    \"avatar\": null,\r\n    \"phone_number\": \"09241092512093\",\r\n    \"driver_license\": null,\r\n    \"birthdate\": \"2014-04-04\"\r\n}",
+							"raw": "{\r\n    \"fullname\": \"Amir\",\r\n    \"email\": \"amir6@mail.com\",\r\n    \"password\": \"123456\",\r\n    \"role\": \"USER\",\r\n    \"address\": \"JL\",\r\n    \"gender\": \"laki-laki\",\r\n    \"avatar\": null,\r\n    \"phone_number\": \"0869\",\r\n    \"driver_license\": null,\r\n    \"birthdate\": \"2014-04-04\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -358,13 +358,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{hostname}}/cars/3",
+							"raw": "{{hostname}}/cars/5",
 							"host": [
 								"{{hostname}}"
 							],
 							"path": [
 								"cars",
-								"3"
+								"5"
 							]
 						}
 					},
@@ -483,6 +483,16 @@
 				{
 					"name": "put car",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "PUT",
 						"header": [],
 						"body": {
@@ -520,12 +530,10 @@
 							"script": {
 								"exec": [
 									"// Stores the user's token in an environment or global variable\r",
-									"console.log(responseBody)\r",
-									"var userToken = responseBody.data?.token;\r",
-									"console.log(userToken.data)\r",
+									"var responseBody = pm.response.json();\r",
+									"var userToken = responseBody.data.token;\r",
 									"pm.globals.set(\"token\", userToken);\r",
-									"\r",
-									"console.log(pm.globals.get(\"token\"))"
+									""
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -564,7 +572,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"amir6@mail.com\",\r\n    \"password\": \"123456\"\r\n}",
+							"raw": "{\r\n    \"email\": \"amir6@mail.com\",\r\n    \"password\": \"@23123\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -579,6 +587,47 @@
 							"path": [
 								"auth",
 								"signup"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "order",
+			"item": [
+				{
+					"name": "create order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"car_id\": 1,\r\n    \"start_time\": \"2024-09-10\",\r\n    \"end_time\": \"2024-09-11\",\r\n    \"is_driver\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/order",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"order"
 							]
 						}
 					},
