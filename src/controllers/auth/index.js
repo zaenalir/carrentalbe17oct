@@ -76,7 +76,7 @@ class AuthController extends BaseController {
       const { email, password } = req.body;
       const user = await this.model.getOne({ where: { email } });
 
-      if (!user) return next(new ValidationError("Email already exist!"));
+      if (user) return next(new ValidationError("Email already exist!"));
 
       const newUser = await this.model.set({
         email,

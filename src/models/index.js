@@ -6,8 +6,6 @@ class BaseModel {
   //encapsulation
   constructor(model) {
     this.model = prisma[model]; //prisma.users
-    prisma.users
-    prisma["users"]
   }
   get = async ({ where = {}, q = {} }) => {
     const { sortBy = "createdDt", sort = "desc", page = 1, limit = 10 } = q;
@@ -32,8 +30,8 @@ class BaseModel {
     };
   };
 
-  getById = async (id) => {
-    return this.model.findUnique({ where: { id: Number(id) } });
+  getById = async (id, select) => {
+    return this.model.findUnique({ where: { id: Number(id) }, select });
   };
 
   getOne = async (query) => {
