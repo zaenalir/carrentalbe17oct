@@ -3,7 +3,6 @@ const path = require('path')
 
 const publicDir = path.join(__dirname, '../../public')
 const uploadsDir = path.join(publicDir, 'uploads')
-console.log(__dirname, uploadsDir)
 
 const memoryStorage = multer.memoryStorage()
 const diskStorage = multer.diskStorage({

@@ -66,11 +66,29 @@
 									"    });",
 									"});"
 								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"packages": {},
 								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -83,7 +101,40 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "get users",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "test",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:3000/api/v1/users",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"api",
+										"v1",
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": null,
+							"header": null,
+							"cookie": [],
+							"body": "{\r\n    \"code\": 200,\r\n    \"status\": \"success\",\r\n    \"message\": \"Data fetched successfully\",\r\n    \"data\": [\r\n        {\r\n            \"id\": 1,\r\n            \"fullname\": \"Amir\",\r\n            \"email\": \"amir@mail.com\",\r\n            \"role\": \"USER\",\r\n            \"phone_number\": \"09241092512093\",\r\n            \"address\": \"JL\"\r\n        },\r\n        {\r\n            \"id\": 7,\r\n            \"fullname\": \"Amir\",\r\n            \"email\": \"amir6@mail.com\",\r\n            \"role\": \"admin\",\r\n            \"phone_number\": \"0869\",\r\n            \"address\": \"JL\"\r\n        },\r\n        {\r\n            \"id\": 6,\r\n            \"fullname\": \"Amir\",\r\n            \"email\": \"amir5@mail.com\",\r\n            \"role\": \"USER\",\r\n            \"phone_number\": \"09241092512012\",\r\n            \"address\": \"JL\"\r\n        },\r\n        {\r\n            \"id\": 5,\r\n            \"fullname\": \"Amir\",\r\n            \"email\": \"amir4@mail.com\",\r\n            \"role\": \"USER\",\r\n            \"phone_number\": \"092410925120\",\r\n            \"address\": \"JL\"\r\n        },\r\n        {\r\n            \"id\": 4,\r\n            \"fullname\": \"Amir\",\r\n            \"email\": \"amir3@mail.com\",\r\n            \"role\": \"USER\",\r\n            \"phone_number\": \"09241092512091\",\r\n            \"address\": \"JL\"\r\n        },\r\n        {\r\n            \"id\": 3,\r\n            \"fullname\": \"Amir\",\r\n            \"email\": \"amir2@mail.com\",\r\n            \"role\": \"USER\",\r\n            \"phone_number\": \"0924109251209\",\r\n            \"address\": \"JL\"\r\n        }\r\n    ],\r\n    \"page\": 1,\r\n    \"limit\": 10,\r\n    \"totalPage\": 1,\r\n    \"total\": 6\r\n}"
+						}
+					]
 				},
 				{
 					"name": "get user by id",
@@ -516,6 +567,32 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "download",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{hostname}}/cars/download",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"cars",
+								"download"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "import xlsx",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
 				}
 			]
 		},
@@ -628,6 +705,167 @@
 							],
 							"path": [
 								"order"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "payment",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"payment\": 150000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/order/8/payment",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"order",
+								"8",
+								"payment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "invoice",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"payment\": 150000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{hostname}}/order/8/invoice",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"order",
+								"8",
+								"invoice"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "upload",
+			"item": [
+				{
+					"name": "local",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Administrator/Pictures/untitled.JPG"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{hostname}}/upload/local",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"upload",
+								"local"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "cloud",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Administrator/Pictures/untitled.JPG"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{hostname}}/upload/",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"upload",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get local file",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/public/uploads/file-1728546892969-177844329.JPG",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"public",
+								"uploads",
+								"file-1728546892969-177844329.JPG"
 							]
 						}
 					},

@@ -1,4 +1,4 @@
-const BaseModel = require("./index");
+const BaseModel = require("./base");
 
 //inheritance
 class UserModel extends BaseModel {
@@ -15,4 +15,4 @@ class UserModel extends BaseModel {
   }
 }
 
-module.exports = UserModel
+module.exports = UserModel;

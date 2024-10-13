@@ -5,12 +5,14 @@ const prisma = new PrismaClient();
 class BaseModel {
   //encapsulation
   constructor(model) {
+    this.name = model
     this.model = prisma[model]; //prisma.users
   }
-  get = async ({ where = {}, q = {} }) => {
+
+  get = async ({ where = {}, q = {}, select = this.select }) => {
     const { sortBy = "createdDt", sort = "desc", page = 1, limit = 10 } = q;
     const query = {
-      select: this.select,
+      select,
       where,
       orderBy: {
         [sortBy]: sort,
@@ -18,10 +20,10 @@ class BaseModel {
       skip: (page - 1) * limit,
       take: limit,
     };
-
+    
     const [resources, count] = await prisma.$transaction([
       this.model.findMany(query),
-      this.model.count(where),
+      this.model.count({where})
     ]);
 
     return {
@@ -42,6 +44,10 @@ class BaseModel {
     return this.model.create({ data });
   };
 
+  setMany = (data) => {
+    return this.model.createMany({ data });
+  }
+
   update = (id, data) => {
     return this.model.update({
       where: { id: Number(id) },
@@ -56,9 +62,7 @@ class BaseModel {
   };
 
   count = async (where) => {
-    return this.model.count({
-      where,
-    });
+    return this.model.count(where);
   };
 
   transaction = async(query) => {
