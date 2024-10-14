@@ -3,7 +3,7 @@ const path = require('path')
 const express = require('express');
 const router = express.Router()
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('../../openapi.json');
+const swaggerDocument = require('../../swagger-autogen.json');
   
 router.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 router.use('/cars', cars)

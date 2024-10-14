@@ -31,7 +31,7 @@ class CarsController extends BaseController {
     this.searchField = ['name', 'type', 'manufactur', 'year']
     router.get("/", this.handleFilter, this.getAll);
     router.post("/", this.validation(carSchema), authorize, checkRole(['admin']), this.create);
-    router.get("/export", this.export);
+    router.get("/export", this.export('cars export'));
     router.post("/import", memory.single('file'), this.import);
     router.get("/:id", this.get);
     router.put("/:id", this.validation(carSchema), authorize, checkRole(['admin']), this.update);
@@ -62,11 +62,12 @@ class CarsController extends BaseController {
   // yang akan digunakan sebagai parameter where di dalam prisma client
   handleFilter = (req, res, next) => {
     let filter = []
+    console.log(req.query)
     if(req.query.manufactur){
       filter.push({ manufactur: req.query.manufactur })
     }
     if(req.query.type){
-      filter.push({ manufactur: req.query.manufactur })
+      filter.push({ type: req.query.type })
     }
     if(req.query.yearMin){
       filter.push({ year: {gte: req.query.yearMin} })
@@ -82,7 +83,7 @@ class CarsController extends BaseController {
     }
 
     if(filter.length) this.filter = filter
-
+    
     next()
   }
 }

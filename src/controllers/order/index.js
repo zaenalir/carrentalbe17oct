@@ -48,9 +48,11 @@ class OrderController extends BaseController {
         return next(new ValidationError("Car not found or is not available!"));
 
       const getLastOrderToday = await this.model.count({
-        createdDt: {
-          lte: new Date(),
-        },
+        where:{
+          createdDt: {
+            lte: new Date(),
+          },
+        }
       });
       console.log(getLastOrderToday, new Date());
       const currentDate = new Date();

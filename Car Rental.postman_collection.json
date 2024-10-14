@@ -114,15 +114,11 @@
 									}
 								],
 								"url": {
-									"raw": "http://localhost:3000/api/v1/users",
-									"protocol": "http",
+									"raw": "{{hostname}}/users",
 									"host": [
-										"localhost"
+										"{{hostname}}"
 									],
-									"port": "3000",
 									"path": [
-										"api",
-										"v1",
 										"users"
 									]
 								}
@@ -384,7 +380,8 @@
 									"    });",
 									"});"
 								],
-								"type": "text/javascript"
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -392,12 +389,26 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{hostname}}/cars",
+							"raw": "{{hostname}}/cars?search=GR&yearMin=2024&type=SUV",
 							"host": [
 								"{{hostname}}"
 							],
 							"path": [
 								"cars"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "GR"
+								},
+								{
+									"key": "yearMin",
+									"value": "2024"
+								},
+								{
+									"key": "type",
+									"value": "SUV"
+								}
 							]
 						}
 					},
@@ -574,13 +585,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{hostname}}/cars/download",
+							"raw": "{{hostname}}/cars/export",
 							"host": [
 								"{{hostname}}"
 							],
 							"path": [
 								"cars",
-								"download"
+								"export"
 							]
 						}
 					},
@@ -589,8 +600,28 @@
 				{
 					"name": "import xlsx",
 					"request": {
-						"method": "GET",
-						"header": []
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/Administrator/Downloads/cars_import_template.xlsx"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{hostname}}/cars/import",
+							"host": [
+								"{{hostname}}"
+							],
+							"path": [
+								"cars",
+								"import"
+							]
+						}
 					},
 					"response": []
 				}
@@ -691,7 +722,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"car_id\": 1,\r\n    \"start_time\": \"2024-09-10\",\r\n    \"end_time\": \"2024-09-11\",\r\n    \"is_driver\": false\r\n}",
+							"raw": "{\r\n    \"car_id\": 18,\r\n    \"start_time\": \"2024-09-10\",\r\n    \"end_time\": \"2024-09-11\",\r\n    \"is_driver\": false\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -735,13 +766,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{hostname}}/order/8/payment",
+							"raw": "{{hostname}}/order/10/payment",
 							"host": [
 								"{{hostname}}"
 							],
 							"path": [
 								"order",
-								"8",
+								"10",
 								"payment"
 							]
 						}
@@ -776,13 +807,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{hostname}}/order/8/invoice",
+							"raw": "{{hostname}}/order/10/invoice",
 							"host": [
 								"{{hostname}}"
 							],
 							"path": [
 								"order",
-								"8",
+								"10",
 								"invoice"
 							]
 						}
