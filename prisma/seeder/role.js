@@ -1,5 +1,4 @@
 const { PrismaClient } = require("@prisma/client");
-
 const prisma = new PrismaClient();
 
 const ROLE = [
@@ -21,8 +20,8 @@ const ROLE = [
 ];
 
 async function roleSeed() {
-  await prisma.role.deleteMany();
-  await prisma.role.createMany({
+  await prisma.roles.deleteMany();
+  return await prisma.roles.createMany({
     data: ROLE,
   });
 }

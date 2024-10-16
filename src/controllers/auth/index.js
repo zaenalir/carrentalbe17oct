@@ -81,7 +81,7 @@ class AuthController extends BaseController {
       const newUser = await this.model.set({
         email,
         password: await encryptPassword(password),
-        role: "USER",
+        roleId: 3
       });
 
       return res.status(200).json(

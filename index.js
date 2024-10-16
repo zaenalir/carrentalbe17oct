@@ -1,4 +1,6 @@
-require('dotenv').config()
+const envPath = process.env.NODE_ENV === 'development' ? 
+  '.env' : `.env.${process.env.NODE_ENV}`
+require('dotenv').config({path: envPath})
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -31,6 +33,8 @@ app.use((req, res, next) => {
   next(new NotFoundError(null, "Sorry, page not found!"));
 })
 
-app.listen(PORT, () => {
+server = app.listen(PORT, () => {
   console.log(`Server running on port http://localhost:${PORT}`);
 });
+
+module.exports = server;
