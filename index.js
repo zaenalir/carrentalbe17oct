@@ -1,4 +1,4 @@
-const envPath = process.env.NODE_ENV === 'development' ? 
+const envPath = !process.env.NODE_ENV ? 
   '.env' : `.env.${process.env.NODE_ENV}` // .env || .env.test
 require('dotenv').config({path: envPath})
 const express = require("express");
